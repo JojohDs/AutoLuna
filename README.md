@@ -1,6 +1,6 @@
-# 🚗 AutoLuna
+#  AutoLuna
 
-## 📌 1. Sobre o Projeto
+##  1. Sobre o Projeto
 
 O **AutoLuna** é uma plataforma web desenvolvida para o gerenciamento e a divulgação de veículos disponíveis para venda.
 
@@ -8,7 +8,7 @@ O sistema tem como proposta facilitar o trabalho de vendedores e administradores
 
 ---
 
-## 📋 2. Situação-Problema
+## 2. Situação-Problema
 
 Atualmente, a divulgação e o gerenciamento de veículos para venda podem ser realizados por meio de diferentes plataformas, planilhas, redes sociais e anúncios, dificultando a organização das informações e o acompanhamento dos veículos disponíveis.
 
@@ -18,7 +18,7 @@ Dessa forma, surge a necessidade de desenvolver uma plataforma que permita organ
 
 ---
 
-## 🎯 3. Objetivo
+## 3. Objetivo
 
 Desenvolver uma plataforma web para o gerenciamento e a divulgação de veículos disponíveis para venda.
 
@@ -26,7 +26,7 @@ O sistema permitirá que vendedores e administradores cadastrem e gerenciem veí
 
 ---
 
-## 👥 4. Público-Alvo
+## 4. Público-Alvo
 
 O sistema será destinado principalmente a:
 
@@ -37,7 +37,7 @@ O sistema será destinado principalmente a:
 
 ---
 
-## 👤 5. Necessidades dos Usuários
+##  5. Necessidades dos Usuários
 
 ### Administradores e Vendedores
 
@@ -66,11 +66,11 @@ Os clientes poderão:
 
 ---
 
-## 📦 6. Escopo do Projeto
+## 6. Escopo do Projeto
 
 O projeto terá como foco o cadastro, gerenciamento, divulgação e consulta de veículos disponíveis para venda.
 
-### ✅ Funcionalidades Incluídas
+### Funcionalidades Incluídas
 
 - Cadastro de usuários;
 - Login de administrador;
@@ -90,7 +90,7 @@ O projeto terá como foco o cadastro, gerenciamento, divulgação e consulta de 
 
 ---
 
-## 🚘 7. Principais Informações dos Veículos
+##  7. Principais Informações dos Veículos
 
 Cada veículo poderá possuir as seguintes informações:
 
@@ -109,7 +109,7 @@ Cada veículo poderá possuir as seguintes informações:
 
 ---
 
-## 🛠️ 8. Tecnologias
+## 8. Tecnologias
 
 ### Frontend
 
@@ -136,7 +136,7 @@ Cada veículo poderá possuir as seguintes informações:
 
 ---
 
-## 🏗️ 9. Estrutura do Projeto
+## 9. Estrutura do Projeto
 
 ```text
 AutoLuna/
