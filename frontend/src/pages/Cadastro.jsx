@@ -3,26 +3,37 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Button from "../components/Button";
 
-function Login() {
+function Cadastro() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [form, setForm] = useState({
+    nome: "",
+    email: "",
+    senha: "",
+  });
+
   const [error, setError] = useState("");
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setForm((current) => ({
+      ...current,
+      [name]: value,
+    }));
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (!email || !senha) {
+    if (!form.nome || !form.email || !form.senha) {
       setError("Preencha todos os campos.");
       return;
     }
 
     localStorage.setItem(
       "autoluna_usuario",
-      JSON.stringify({
-        email,
-      })
+      JSON.stringify(form)
     );
 
     navigate("/dashboard");
@@ -34,28 +45,39 @@ function Login() {
       <div className="auth-card">
 
         <div className="auth-header">
-          <span className="section-label">
-            BEM-VINDO
-          </span>
 
           <h1>
-            Entrar
+            Criar conta
           </h1>
 
           <p>
-            Acesse sua área administrativa.
+            Cadastre-se para acessar a plataforma.
           </p>
+
         </div>
 
         <form onSubmit={handleSubmit}>
 
           <label>
-            Nome / E-mail
+            Nome
+
+            <input
+              type="text"
+              name="nome"
+              value={form.nome}
+              onChange={handleChange}
+              placeholder="Digite seu nome"
+            />
+          </label>
+
+          <label>
+            E-mail
 
             <input
               type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              name="email"
+              value={form.email}
+              onChange={handleChange}
               placeholder="Digite seu e-mail"
             />
           </label>
@@ -65,8 +87,9 @@ function Login() {
 
             <input
               type="password"
-              value={senha}
-              onChange={(event) => setSenha(event.target.value)}
+              name="senha"
+              value={form.senha}
+              onChange={handleChange}
               placeholder="Digite sua senha"
             />
           </label>
@@ -78,15 +101,15 @@ function Login() {
           )}
 
           <Button type="submit">
-            Entrar
+            Cadastrar
           </Button>
 
         </form>
 
         <p className="auth-footer">
-          Não possui conta?{" "}
-          <Link to="/cadastro">
-            Cadastre-se aqui
+          Já possui conta?{" "}
+          <Link to="/login">
+            Entre aqui
           </Link>
         </p>
 
@@ -96,4 +119,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Cadastro;    
