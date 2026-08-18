@@ -4,7 +4,7 @@ function Footer() {
 
       <div className="footer-conteudo">
 
-        <img src="../assets/AutoLuna.02.png" alt="logo" className="footer-logo"/>
+        <img src="" alt="logo" className="footer-logo"/>
 
         <div className="footer-redes">
 

@@ -1,25 +1,24 @@
-import { Link } from "react-router-dom";
-
-function VehicleCard({ vehicle }) {
+function VehicleCard({ vehicle, onDelete, onSell }) {
   return (
     <article className="vehicle-card">
-
       <div className="vehicle-image">
         {vehicle.image ? (
-          <img src={vehicle.image} alt={`${vehicle.marca} ${vehicle.modelo}`} />
+          <img
+            src={vehicle.image}
+            alt={`${vehicle.marca} ${vehicle.modelo}`}
+          />
         ) : (
-          <div className="vehicle-placeholder">
-            
-          </div>
+          <div className="vehicle-placeholder" />
         )}
 
-        <span className={`vehicle-status ${vehicle.status.toLowerCase()}`}>
+        <span
+          className={`vehicle-status ${vehicle.status.toLowerCase()}`}
+        >
           {vehicle.status}
         </span>
       </div>
 
       <div className="vehicle-info">
-
         <span className="vehicle-category">
           {vehicle.categoria}
         </span>
@@ -29,20 +28,29 @@ function VehicleCard({ vehicle }) {
         </h3>
 
         <p className="vehicle-details">
-          {vehicle.ano} • {vehicle.quilometragem.toLocaleString("pt-BR")} km
+          {vehicle.ano} •{" "}
+          {vehicle.quilometragem.toLocaleString("pt-BR")} km
         </p>
 
         <p className="vehicle-price">
           R$ {vehicle.preco.toLocaleString("pt-BR")}
         </p>
 
-        <Link
-          to="/veiculos"
-          className="vehicle-button"
-        >
+        <button className="vehicle-button">
           Ver detalhes
-        </Link>
+        </button>
 
+        <div className="vehicle-actions">
+              {vehicle.status !== "Vendido" && (
+          <button onClick={() => onSell(vehicle.id)}>
+              Marcar como vendido
+          </button>
+  )}
+
+          <button onClick={() => onDelete(vehicle.id)}>
+              Excluir
+           </button>
+          </div>
       </div>
     </article>
   );

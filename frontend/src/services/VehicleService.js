@@ -1,8 +1,3 @@
-import Corolla from "../assets/Corolla.jpg";
-import honda from "../assets/Honda.jpg";
-import Jeep from "../assets/Jeep.jpg";
-import volk from "../assets/volk.jpg";
-
 const defaultVehicles = [
   {
     id: 1,
@@ -60,7 +55,7 @@ const defaultVehicles = [
     combustivel: "Flex",
     cambio: "Automático",
     categoria: "SUV",
-    imagem: tcross,
+    imagem: "",
     status: "Disponível",
   },
 ];

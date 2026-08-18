@@ -6,7 +6,7 @@ function Header() {
       <div className="header-container">
 
         <NavLink to="/" className="logo">
-          <span className="logo-icon"></span>
+          <span className="logo-icon"><img src="" alt="" /></span>
           <span>AutoLuna</span>
         </NavLink>
 
