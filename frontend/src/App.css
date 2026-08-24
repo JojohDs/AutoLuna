@@ -951,6 +951,46 @@ a {
   margin-top: 25px;
 }
 
+.vehicle-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.vehicle-actions button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/*Marcar como vendido*/
+
+.vehicle-actions button:first-child {
+  background: #70001f;
+  color: white;
+  border: 1px solid #70001f;
+}
+
+.vehicle-actions button:first-child:hover {
+  background: #8d092d;
+}
+
+/* Excluir */
+.vehicle-actions button:last-child {
+  background: white;
+  color: #70001f;
+  border: 1px solid #70001f;
+}
+
+.vehicle-actions button:last-child:hover {
+  background: #70001f;
+  color: white;
+}
+
 /*RESPONSIVE*/
 
 @media (max-width: 900px) {
