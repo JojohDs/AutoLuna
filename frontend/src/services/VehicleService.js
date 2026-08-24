@@ -11,7 +11,7 @@ const defaultVehicles = [
     cambio: "Automático",
     categoria: "Sedan",
     status: "Disponível",
-    image: "",
+    image: "public/assets/corolla.jpg",
   },
 
   {
@@ -26,7 +26,7 @@ const defaultVehicles = [
     cambio: "Automático",
     categoria: "Sedan",
     status: "Disponível",
-    image: "",
+    image: "public/assets/honda.jpg",
   },
 
   {
@@ -41,7 +41,7 @@ const defaultVehicles = [
     cambio: "Automático",
     categoria: "SUV",
     status: "Vendido",
-    image: "",
+    image: "public/assets/jeep.jpg",
   },
 
    {
@@ -55,7 +55,7 @@ const defaultVehicles = [
     combustivel: "Flex",
     cambio: "Automático",
     categoria: "SUV",
-    imagem: "",
+    image: "public/assets/volk.jpg",
     status: "Disponível",
   },
 ];

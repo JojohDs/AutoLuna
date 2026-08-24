@@ -6,26 +6,18 @@ function Header() {
       <div className="header-container">
 
         <NavLink to="/" className="logo">
-          <span className="logo-icon"><img src="" alt="" /></span>
+          <img src="/assets/AutoLuna.png" alt="logo" />
           <span>AutoLuna</span>
         </NavLink>
 
         <nav className="navigation">
           <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive ? "nav-link active" : "nav-link"
-            }
-          >
+            to="/"className={({ isActive }) =>isActive ? "nav-link active" : "nav-link" }>
             Comprar
           </NavLink>
 
           <NavLink
-            to="/veiculos"
-            className={({ isActive }) =>
-              isActive ? "nav-link active" : "nav-link"
-            }
-          >
+            to="/veiculos" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
             Marcas
           </NavLink>
 

@@ -3,22 +3,10 @@ import { useVehicles } from "../context/VehicleContext";
 
 function Dashboard() {
   const { vehicles } = useVehicles();
-
-  const available = vehicles.filter(
-    (vehicle) => vehicle.status === "Disponível"
-  ).length;
-
-  const sold = vehicles.filter(
-    (vehicle) => vehicle.status === "Vendido"
-  ).length;
-
-  const totalValue = vehicles.reduce(
-    (total, vehicle) => total + vehicle.preco,
-    0
-  );
-
-  const averagePrice =
-    vehicles.length > 0 ? totalValue / vehicles.length : 0;
+  const available = vehicles.filter((vehicle) => vehicle.status === "Disponível").length;
+  const sold = vehicles.filter((vehicle) => vehicle.status === "Vendido").length;
+  const totalValue = vehicles.reduce((total, vehicle) => total + vehicle.preco, 0);
+  const averagePrice = vehicles.length > 0 ? totalValue / vehicles.length : 0;
 
   return (
     <div className="admin-layout">
@@ -26,7 +14,6 @@ function Dashboard() {
 
       <section className="dashboard">
         <div className="dashboard-header">
-          <span className="section-label">AUTO LUNA</span>
 
           <h1>Dashboard</h1>
 
@@ -74,9 +61,7 @@ function Dashboard() {
               .reverse()
               .map((vehicle) => (
                 <div
-                  className="dashboard-list-item"
-                  key={vehicle.id}
-                >
+                  className="dashboard-list-item" key={vehicle.id}>
                   <div>
                     <strong>
                       {vehicle.marca} {vehicle.modelo}

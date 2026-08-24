@@ -1,6 +1,7 @@
 function VehicleCard({ vehicle, onDelete, onSell }) {
   return (
     <article className="vehicle-card">
+
       <div className="vehicle-image">
         {vehicle.image ? (
           <img
@@ -8,7 +9,9 @@ function VehicleCard({ vehicle, onDelete, onSell }) {
             alt={`${vehicle.marca} ${vehicle.modelo}`}
           />
         ) : (
-          <div className="vehicle-placeholder" />
+          <div className="vehicle-placeholder">
+            Sem imagem
+          </div>
         )}
 
         <span
@@ -19,6 +22,7 @@ function VehicleCard({ vehicle, onDelete, onSell }) {
       </div>
 
       <div className="vehicle-info">
+
         <span className="vehicle-category">
           {vehicle.categoria}
         </span>
@@ -29,11 +33,11 @@ function VehicleCard({ vehicle, onDelete, onSell }) {
 
         <p className="vehicle-details">
           {vehicle.ano} •{" "}
-          {vehicle.quilometragem.toLocaleString("pt-BR")} km
+          {Number(vehicle.quilometragem).toLocaleString("pt-BR")} km
         </p>
 
         <p className="vehicle-price">
-          R$ {vehicle.preco.toLocaleString("pt-BR")}
+          R$ {Number(vehicle.preco).toLocaleString("pt-BR")}
         </p>
 
         <button className="vehicle-button">
@@ -41,16 +45,19 @@ function VehicleCard({ vehicle, onDelete, onSell }) {
         </button>
 
         <div className="vehicle-actions">
-              {vehicle.status !== "Vendido" && (
-          <button onClick={() => onSell(vehicle.id)}>
+
+          {vehicle.status !== "Vendido" && (
+            <button onClick={() => onSell(vehicle.id)}>
               Marcar como vendido
-          </button>
-  )}
+            </button>
+          )}
 
           <button onClick={() => onDelete(vehicle.id)}>
-              Excluir
-           </button>
-          </div>
+            Excluir
+          </button>
+
+        </div>
+
       </div>
     </article>
   );

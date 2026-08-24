@@ -5,7 +5,7 @@ function Sidebar() {
     <aside className="sidebar">
 
       <div className="sidebar-logo">
-        <span className="logo-icon"><img src="" alt="logo" /></span>
+      <img src="/assets/AutoLuna.png" alt="logo" />
         <strong>AutoLuna</strong>
       </div>
 
