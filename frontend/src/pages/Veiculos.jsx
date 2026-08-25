@@ -1,20 +1,37 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import VehicleCard from "../components/VehicleCard";
-import { useVehicles } from "../context/VehicleContext";
+import {
+  getVehicles,
+  deleteVehicle,
+  markVehicleAsSold,
+} from "../api/vehicleApi";
 
 function Veiculos() {
-  const {
-    vehicles,
-    deleteVehicle,
-    markAsSold,
-  } = useVehicles();
+  const [vehicles, setVehicles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [erro, setErro] = useState("");
 
   const [busca, setBusca] = useState("");
   const [categoria, setCategoria] = useState("Todas");
   const [status, setStatus] = useState("Todos");
   const [precoMaximo, setPrecoMaximo] = useState("");
+
+  useEffect(() => {
+    async function carregarVeiculos() {
+      try {
+        setLoading(true);
+        const dados = await getVehicles();
+        setVehicles(dados);
+      } catch (error) {
+        setErro("Não foi possível carregar os veículos.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    carregarVeiculos();
+  }, []);
 
   const veiculosFiltrados = vehicles.filter((vehicle) => {
     const termo = busca.toLowerCase();
@@ -24,16 +41,13 @@ function Veiculos() {
       vehicle.modelo.toLowerCase().includes(termo);
 
     const correspondeCategoria =
-      categoria === "Todas" ||
-      vehicle.categoria === categoria;
+      categoria === "Todas" || vehicle.categoria === categoria;
 
     const correspondeStatus =
-      status === "Todos" ||
-      vehicle.status === status;
+      status === "Todos" || vehicle.status === status;
 
     const correspondePreco =
-      precoMaximo === "" ||
-      vehicle.preco <= Number(precoMaximo);
+      precoMaximo === "" || vehicle.preco <= Number(precoMaximo);
 
     return (
       correspondeBusca &&
@@ -50,6 +64,32 @@ function Veiculos() {
     setPrecoMaximo("");
   }
 
+  async function handleDelete(id) {
+    try {
+      await deleteVehicle(id);
+
+      setVehicles((current) =>
+        current.filter((vehicle) => vehicle.id !== id)
+      );
+    } catch (error) {
+      alert("Erro ao excluir veículo.");
+    }
+  }
+
+  async function handleSell(vehicle) {
+    try {
+      const atualizado = await markVehicleAsSold(vehicle.id, vehicle);
+
+      setVehicles((current) =>
+        current.map((item) =>
+          item.id === vehicle.id ? atualizado : item
+        )
+      );
+    } catch (error) {
+      alert("Erro ao marcar veículo como vendido.");
+    }
+  }
+
   return (
     <div className="pagina-veiculos">
       <Sidebar />
@@ -57,9 +97,7 @@ function Veiculos() {
       <main className="conteudo-veiculos">
         <header className="cabecalho-veiculos">
           <span>AutoLuna</span>
-
           <h1>Veículos</h1>
-
           <p>Gerencie os veículos cadastrados.</p>
         </header>
 
@@ -100,29 +138,34 @@ function Veiculos() {
             onChange={(e) => setPrecoMaximo(e.target.value)}
           />
 
-          <button onClick={limparFiltros}>
-            Limpar filtros
-          </button>
+          <button onClick={limparFiltros}>Limpar filtros</button>
         </section>
 
-        <p>
-          {veiculosFiltrados.length} veículo(s) encontrado(s)
-        </p>
+        {loading && <p>Carregando veículos...</p>}
 
-        <section className="lista-veiculos">
-          {veiculosFiltrados.length > 0 ? (
-            veiculosFiltrados.map((vehicle) => (
-              <VehicleCard
-                key={vehicle.id}
-                vehicle={vehicle}
-                onDelete={deleteVehicle}
-                onSell={markAsSold}
-              />
-            ))
-          ) : (
-            <p>Nenhum veículo encontrado.</p>
-          )}
-        </section>
+        {erro && <p>{erro}</p>}
+
+        {!loading && !erro && (
+          <>
+            <p>{veiculosFiltrados.length} veículo(s) encontrado(s)</p>
+
+            <section className="lista-veiculos">
+              {veiculosFiltrados.length > 0 ? (
+                veiculosFiltrados.map((vehicle) => (
+                  <VehicleCard
+                    key={vehicle.id}
+                    vehicle={vehicle}
+                    onDelete={handleDelete}
+                    onSell={handleSell}
+                    showActions
+                  />
+                ))
+              ) : (
+                <p>Nenhum veículo encontrado.</p>
+              )}
+            </section>
+          </>
+        )}
       </main>
     </div>
   );

@@ -47,7 +47,7 @@ function VehicleCard({ vehicle, onDelete, onSell }) {
         <div className="vehicle-actions">
 
           {vehicle.status !== "Vendido" && (
-            <button onClick={() => onSell(vehicle.id)}>
+            <button onClick={() => onSell(vehicle)}>
               Marcar como vendido
             </button>
           )}

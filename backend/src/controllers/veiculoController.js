@@ -14,9 +14,12 @@ async function listarVeiculos(req, res) {
 
     res.json(result.rows);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ erro: "Erro ao listar veículos" });
-  }
+  console.error("ERRO AO LISTAR VEÍCULOS:", error);
+
+  res.status(500).json({
+    erro: error.message
+  });
+}
 }
 
 // BUSCAR POR ID
