@@ -1,5 +1,4 @@
 const express = require("express");
-
 const router = express.Router();
 
 const {
@@ -7,7 +6,7 @@ const {
   buscarVeiculo,
   criarVeiculo,
   atualizarVeiculo,
-  excluirVeiculo,
+  excluirVeiculo
 } = require("../controllers/veiculoController");
 
 router.get("/", listarVeiculos);

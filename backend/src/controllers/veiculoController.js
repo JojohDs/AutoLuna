@@ -1,29 +1,38 @@
 const pool = require("../config/database");
 
-// LISTAR VEÍCULOS
+// LISTAR
 async function listarVeiculos(req, res) {
   try {
-    const result = await pool.query(
-      "SELECT * FROM veiculos ORDER BY id DESC"
-    );
+    const result = await pool.query(`
+      SELECT 
+        v.*,
+        u.nome AS usuario_nome
+      FROM veiculos v
+      JOIN usuarios u ON u.id = v.usuario_id
+      ORDER BY v.id DESC
+    `);
 
     res.json(result.rows);
   } catch (error) {
     console.error(error);
-
-    res.status(500).json({
-      erro: "Erro ao buscar veículos",
-    });
+    res.status(500).json({ erro: "Erro ao listar veículos" });
   }
 }
 
-// BUSCAR VEÍCULO POR ID
+// BUSCAR POR ID
 async function buscarVeiculo(req, res) {
   try {
     const { id } = req.params;
 
     const result = await pool.query(
-      "SELECT * FROM veiculos WHERE id = $1",
+      `
+      SELECT 
+        v.*,
+        u.nome AS usuario_nome
+      FROM veiculos v
+      JOIN usuarios u ON u.id = v.usuario_id
+      WHERE v.id = $1
+      `,
       [id]
     );
 
@@ -36,14 +45,11 @@ async function buscarVeiculo(req, res) {
     res.json(result.rows[0]);
   } catch (error) {
     console.error(error);
-
-    res.status(500).json({
-      erro: "Erro ao buscar veículo",
-    });
+    res.status(500).json({ erro: "Erro ao buscar veículo" });
   }
 }
 
-// CADASTRAR VEÍCULO
+// CADASTRAR
 async function criarVeiculo(req, res) {
   try {
     const {
@@ -57,20 +63,14 @@ async function criarVeiculo(req, res) {
       combustivel,
       cambio,
       categoria,
-      status,
-      imagem,
       descricao,
+      imagem,
+      status,
     } = req.body;
 
-    if (!usuario_id) {
-      return res.status(400).json({
-        erro: "O usuario_id é obrigatório",
-      });
-    }
-
     const result = await pool.query(
-      `INSERT INTO veiculos
-      (
+      `
+      INSERT INTO veiculos (
         usuario_id,
         marca,
         modelo,
@@ -81,16 +81,16 @@ async function criarVeiculo(req, res) {
         combustivel,
         cambio,
         categoria,
-        status,
+        descricao,
         imagem,
-        descricao
+        status
       )
-      VALUES
-      (
+      VALUES (
         $1, $2, $3, $4, $5, $6, $7,
         $8, $9, $10, $11, $12, $13
       )
-      RETURNING *`,
+      RETURNING *
+      `,
       [
         usuario_id,
         marca,
@@ -102,24 +102,20 @@ async function criarVeiculo(req, res) {
         combustivel,
         cambio,
         categoria,
-        status || "Disponível",
-        imagem,
         descricao,
+        imagem,
+        status || "Disponível",
       ]
     );
 
     res.status(201).json(result.rows[0]);
   } catch (error) {
-  console.error("ERRO AO CADASTRAR VEÍCULO:", error);
-
-  res.status(500).json({
-    erro: "Erro ao cadastrar veículo",
-    detalhes: error.message,
-  });
-}
+    console.error(error);
+    res.status(500).json({ erro: "Erro ao cadastrar veículo" });
+  }
 }
 
-// ATUALIZAR VEÍCULO
+// ATUALIZAR
 async function atualizarVeiculo(req, res) {
   try {
     const { id } = req.params;
@@ -135,35 +131,31 @@ async function atualizarVeiculo(req, res) {
       combustivel,
       cambio,
       categoria,
-      status,
-      imagem,
       descricao,
+      imagem,
+      status,
     } = req.body;
 
-    if (!usuario_id) {
-      return res.status(400).json({
-        erro: "O usuario_id é obrigatório",
-      });
-    }
-
     const result = await pool.query(
-      `UPDATE veiculos
-       SET
-         usuario_id = $1,
-         marca = $2,
-         modelo = $3,
-         ano = $4,
-         quilometragem = $5,
-         preco = $6,
-         cor = $7,
-         combustivel = $8,
-         cambio = $9,
-         categoria = $10,
-         status = $11,
-         imagem = $12,
-         descricao = $13
-       WHERE id = $14
-       RETURNING *`,
+      `
+      UPDATE veiculos
+      SET
+        usuario_id = $1,
+        marca = $2,
+        modelo = $3,
+        ano = $4,
+        quilometragem = $5,
+        preco = $6,
+        cor = $7,
+        combustivel = $8,
+        cambio = $9,
+        categoria = $10,
+        descricao = $11,
+        imagem = $12,
+        status = $13
+      WHERE id = $14
+      RETURNING *
+      `,
       [
         usuario_id,
         marca,
@@ -175,9 +167,9 @@ async function atualizarVeiculo(req, res) {
         combustivel,
         cambio,
         categoria,
-        status,
-        imagem,
         descricao,
+        imagem,
+        status,
         id,
       ]
     );
@@ -191,20 +183,17 @@ async function atualizarVeiculo(req, res) {
     res.json(result.rows[0]);
   } catch (error) {
     console.error(error);
-
-    res.status(500).json({
-      erro: "Erro ao atualizar veículo",
-    });
+    res.status(500).json({ erro: "Erro ao atualizar veículo" });
   }
 }
 
-// EXCLUIR VEÍCULO
+// EXCLUIR
 async function excluirVeiculo(req, res) {
   try {
     const { id } = req.params;
 
     const result = await pool.query(
-      "DELETE FROM veiculos WHERE id = $1 RETURNING *",
+      "DELETE FROM veiculos WHERE id = $1 RETURNING id",
       [id]
     );
 
@@ -218,12 +207,12 @@ async function excluirVeiculo(req, res) {
       mensagem: "Veículo excluído com sucesso",
     });
   } catch (error) {
-    console.error(error);
+  console.error("ERRO AO CADASTRAR:", error);
 
-    res.status(500).json({
-      erro: "Erro ao excluir veículo",
-    });
-  }
+  res.status(500).json({
+    erro: error.message
+  });
+}
 }
 
 module.exports = {
