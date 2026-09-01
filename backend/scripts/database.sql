@@ -10,7 +10,6 @@ CREATE TABLE usuarios (
 
 CREATE TABLE veiculos (
     id SERIAL PRIMARY KEY,
-    usuario_id INTEGER NOT NULL,
     marca VARCHAR(50) NOT NULL,
     modelo VARCHAR(100) NOT NULL,
     ano INTEGER NOT NULL,
@@ -24,11 +23,6 @@ CREATE TABLE veiculos (
     imagem TEXT,
 
     status VARCHAR(20) NOT NULL DEFAULT 'Disponível',
-
-    CONSTRAINT fk_veiculo_usuario
-        FOREIGN KEY (usuario_id)
-        REFERENCES usuarios(id)
-        ON DELETE CASCADE
 );
 
 CREATE TABLE interesses (

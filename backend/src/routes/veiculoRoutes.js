@@ -1,18 +1,12 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from 'express';
+import { veiculoController } from '../controllers/veiculoController';
 
-const {
-  listarVeiculos,
-  buscarVeiculo,
-  criarVeiculo,
-  atualizarVeiculo,
-  excluirVeiculo
-} = require("../controllers/veiculoController");
+const router = Router();
 
-router.get("/", listarVeiculos);
-router.get("/:id", buscarVeiculo);
-router.post("/", criarVeiculo);
-router.put("/:id", atualizarVeiculo);
-router.delete("/:id", excluirVeiculo);
+router.get("/", veiculoController.getAll);
+router.get("/:id", veiculoController.getById);
+router.post("/", veiculoController.create);
+router.put("/:id", veiculoController.updateVeiculo);
+router.delete("/:id", veiculoController.delete);
 
-module.exports = router;
+export default router

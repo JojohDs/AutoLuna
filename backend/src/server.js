@@ -1,15 +1,14 @@
-const express = require("express");
-const cors = require("cors");
-
-const veiculoRoutes = require("./routes/veiculoRoutes");
+import express from "express";
+import router from "./routes/veiculoRoutes";
+import cors from "cors";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.json());
+app.use(express());
+app.use(router)
 
-app.use("/api/veiculos", veiculoRoutes);
-
-app.listen(3000, () => {
-  console.log("Servidor rodando na porta 3000");
-});
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`)
+})
