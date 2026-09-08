@@ -5,7 +5,7 @@ import {
   createVehicle,
   updateVehicle,
   deleteVehicle as deleteVehicleApi,
-} from "../api/vehicleApi";
+} from "../api/vehiclesApi.js";
 
 const VehicleContext = createContext();
 

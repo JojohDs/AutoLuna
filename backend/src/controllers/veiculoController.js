@@ -1,8 +1,8 @@
-import { veiculoService } from "../services/veiculoServices";
+import { veiculoService } from "../services/veiculoServices.js";
 
 export const veiculoController = {
 
-    async getAll(req, res) {
+    async getAll(req, res) {    
         try {
             const veiculos = await veiculoService.getAll();
 

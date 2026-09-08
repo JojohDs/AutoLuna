@@ -1,4 +1,4 @@
-import { veiculoRepository } from "../repositories/veiculoRepositories";
+import { veiculoRepository } from "../repositories/veiculoRepositories.js";
 
 export const veiculoService = {
 

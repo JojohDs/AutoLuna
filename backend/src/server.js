@@ -1,5 +1,5 @@
 import express from "express";
-import router from "./routes/veiculoRoutes";
+import router from "./routes/veiculoRoutes.js";
 import cors from "cors";
 
 const app = express();
