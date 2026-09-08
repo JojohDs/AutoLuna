@@ -22,7 +22,7 @@ CREATE TABLE veiculos (
     descricao TEXT,
     imagem TEXT,
 
-    status VARCHAR(20) NOT NULL DEFAULT 'Disponível',
+    status VARCHAR(20) NOT NULL DEFAULT 'Disponível'
 );
 
 CREATE TABLE interesses (

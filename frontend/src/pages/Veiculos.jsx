@@ -1,37 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import Sidebar from "../components/Sidebar";
 import VehicleCard from "../components/VehicleCard";
-import {
-  getVehicles,
-  deleteVehicle,
-  markVehicleAsSold,
-} from "../api/vehicleApi";
+import { useVehicles } from "../context/VehicleContext";
 
 function Veiculos() {
-  const [vehicles, setVehicles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [erro, setErro] = useState("");
+  const {
+    vehicles,
+    loading,
+    deleteVehicle,
+    markAsSold,
+  } = useVehicles();
 
   const [busca, setBusca] = useState("");
   const [categoria, setCategoria] = useState("Todas");
   const [status, setStatus] = useState("Todos");
   const [precoMaximo, setPrecoMaximo] = useState("");
-
-  useEffect(() => {
-    async function carregarVeiculos() {
-      try {
-        setLoading(true);
-        const dados = await getVehicles();
-        setVehicles(dados);
-      } catch (error) {
-        setErro("Não foi possível carregar os veículos.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    carregarVeiculos();
-  }, []);
 
   const veiculosFiltrados = vehicles.filter((vehicle) => {
     const termo = busca.toLowerCase();
@@ -47,7 +31,8 @@ function Veiculos() {
       status === "Todos" || vehicle.status === status;
 
     const correspondePreco =
-      precoMaximo === "" || vehicle.preco <= Number(precoMaximo);
+      precoMaximo === "" ||
+      Number(vehicle.preco) <= Number(precoMaximo);
 
     return (
       correspondeBusca &&
@@ -68,25 +53,19 @@ function Veiculos() {
     try {
       await deleteVehicle(id);
 
-      setVehicles((current) =>
-        current.filter((vehicle) => vehicle.id !== id)
-      );
+      alert("Veículo excluído com sucesso!");
     } catch (error) {
-      alert("Erro ao excluir veículo.");
+      alert(error.message || "Erro ao excluir veículo.");
     }
   }
 
   async function handleSell(vehicle) {
     try {
-      const atualizado = await markVehicleAsSold(vehicle.id, vehicle);
+      await markAsSold(vehicle.id);
 
-      setVehicles((current) =>
-        current.map((item) =>
-          item.id === vehicle.id ? atualizado : item
-        )
-      );
+      alert("Veículo marcado como vendido!");
     } catch (error) {
-      alert("Erro ao marcar veículo como vendido.");
+      alert(error.message || "Erro ao marcar veículo como vendido.");
     }
   }
 
@@ -97,7 +76,9 @@ function Veiculos() {
       <main className="conteudo-veiculos">
         <header className="cabecalho-veiculos">
           <span>AutoLuna</span>
+
           <h1>Veículos</h1>
+
           <p>Gerencie os veículos cadastrados.</p>
         </header>
 
@@ -119,7 +100,7 @@ function Veiculos() {
             <option value="Hatch">Hatch</option>
             <option value="Pickup">Pickup</option>
             <option value="Esportivo">Esportivo</option>
-            <option value="Utilitario">Utilitário</option>
+            <option value="Utilitário">Utilitário</option>
           </select>
 
           <select
@@ -138,16 +119,18 @@ function Veiculos() {
             onChange={(e) => setPrecoMaximo(e.target.value)}
           />
 
-          <button onClick={limparFiltros}>Limpar filtros</button>
+          <button onClick={limparFiltros}>
+            Limpar filtros
+          </button>
         </section>
 
         {loading && <p>Carregando veículos...</p>}
 
-        {erro && <p>{erro}</p>}
-
-        {!loading && !erro && (
+        {!loading && (
           <>
-            <p>{veiculosFiltrados.length} veículo(s) encontrado(s)</p>
+            <p>
+              {veiculosFiltrados.length} veículo(s) encontrado(s)
+            </p>
 
             <section className="lista-veiculos">
               {veiculosFiltrados.length > 0 ? (
@@ -157,7 +140,6 @@ function Veiculos() {
                     vehicle={vehicle}
                     onDelete={handleDelete}
                     onSell={handleSell}
-                    showActions
                   />
                 ))
               ) : (

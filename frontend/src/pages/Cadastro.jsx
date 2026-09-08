@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { createUser } from "../api/userApi";
 
 import Button from "../components/Button";
 
@@ -23,7 +24,7 @@ function Cadastro() {
     }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (!form.nome || !form.email || !form.senha) {
@@ -31,12 +32,22 @@ function Cadastro() {
       return;
     }
 
-    localStorage.setItem(
-      "autoluna_usuario",
-      JSON.stringify(form)
-    );
+    try {
+      const usuario = await createUser({
+        ...form,
+        tipo: "usuario",
+      });
 
-    navigate("/dashboard");
+      localStorage.setItem(
+        "autoluna_usuario",
+        JSON.stringify(usuario)
+      );
+
+      navigate("/dashboard");
+
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
   return (

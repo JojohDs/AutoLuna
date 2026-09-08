@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { getUserByEmail } from "../api/userApi";
+
 
 import Button from "../components/Button";
 
@@ -10,7 +12,7 @@ function Login() {
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (!email || !senha) {
@@ -18,14 +20,24 @@ function Login() {
       return;
     }
 
-    localStorage.setItem(
-      "autoluna_usuario",
-      JSON.stringify({
-        email,
-      })
-    );
+    try {
+      const usuario = await getUserByEmail(email);
 
-    navigate("/dashboard");
+      if (usuario.senha !== senha) {
+        setError("E-mail ou senha incorretos.");
+        return;
+      }
+
+      localStorage.setItem(
+        "autoluna_usuario",
+        JSON.stringify(usuario)
+      );
+
+      navigate("/dashboard");
+
+    } catch (error) {
+      setError("E-mail ou senha incorretos.");
+    }
   }
 
   return (
