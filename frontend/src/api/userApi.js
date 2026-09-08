@@ -22,7 +22,7 @@ export async function createUser(user) {
 
 export async function getUserByEmail(email) {
   const response = await fetch(
-    `${API_URL}/email/${encodeURIComponent(email)}`
+    `${API_URL}/${encodeURIComponent(email)}`
   );
 
   if (!response.ok) {

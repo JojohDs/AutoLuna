@@ -1,5 +1,5 @@
-import { intRepository } from "../repositories/intRepositories";
-import { veiculoRepository } from "../repositories/veiculoRepositories";
+import { intRepository } from "../repositories/intRepositories.js";
+import { veiculoRepository } from "../repositories/veiculoRepositories.js";
 
 export const intService = {
     async getById(id){

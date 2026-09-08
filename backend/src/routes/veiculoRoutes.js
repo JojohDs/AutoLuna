@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { veiculoController } from '../controllers/veiculoController.js';
 
-const router = Router();
+const veiculoRouter = Router();
 
-router.get("/", veiculoController.getAll);
-router.get("/:id", veiculoController.getById);
-router.post("/", veiculoController.create);
-router.put("/:id", veiculoController.updateVeiculo);
-router.delete("/:id", veiculoController.delete);
+veiculoRouter.get('', veiculoController.getAll);
+veiculoRouter.get('/:id', veiculoController.getById);
+veiculoRouter.post('/', veiculoController.create);
+veiculoRouter.put('/:id', veiculoController.updateVeiculo);
+veiculoRouter.delete('/:id', veiculoController.delete);
 
-export default router
+export default veiculoRouter

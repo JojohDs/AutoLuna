@@ -1,11 +1,14 @@
 import { Router } from "express";
-import { userController } from "../controllers/userController";
+import { userController } from "../controllers/userController.js";
 
-const router = Router();
+const userRouter = Router();
 
-router.get('/user/nome/:nome', userController.getByNome);
-router.get('/user/:id', userController.getById);
-router.get("/user/email/:email", userController.getByEmail);
-router.post('/user', userController.create);
-router.patch('/user/:id', userController.update);
-router.delete('/user/:id', userController.delete);
+userRouter.get('/:nome', userController.getByNome);
+userRouter.get('/:id', userController.getById);
+userRouter.get("/:email", userController.getByEmail);
+userRouter.post('/', userController.create);
+userRouter.post('/login', userController.login)
+userRouter.patch('/:id', userController.update);
+userRouter.delete('/:id', userController.delete);
+
+export default userRouter

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserByEmail } from "../api/userApi";
+import { loginUser } from "../api/userApi";
 
 
 import Button from "../components/Button";
@@ -21,7 +21,7 @@ function Login() {
     }
 
     try {
-      const usuario = await getUserByEmail(email);
+      const usuario = await loginUser(credential);
 
       if (usuario.senha !== senha) {
         setError("E-mail ou senha incorretos.");

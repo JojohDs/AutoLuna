@@ -1,4 +1,4 @@
-import { userService } from "../services/userServices";
+import { userService } from "../services/userServices.js";
 
 export const userController = {
     async getById(req, res) {
@@ -37,6 +37,22 @@ export const userController = {
             res.status(500).json(
                 { erro: error.message }
             )
+        }
+    },
+    async login(req, res) {
+        try {
+            const { email, senha } = req.body;
+    
+            const user = await userService.getByEmail(email);
+    
+            if (!user || user.senha !== senha) {
+                return res.status(401).json({ erro: "Email ou senha incorretos!" });
+            }
+    
+            res.status(200).json({ mensagem: "Login realizado com sucesso!", user });
+    
+        } catch (error) {
+            res.status(500).json({ erro: error.message });
         }
     },
     async create(req, res) {

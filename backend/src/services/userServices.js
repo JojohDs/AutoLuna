@@ -1,4 +1,4 @@
-import { userRepository } from "../repositories/userRepositories";
+import { userRepository } from "../repositories/userRepositories.js";
 
 export const userService = {
     async getById(id) {

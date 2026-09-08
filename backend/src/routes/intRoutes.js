@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { intController } from "../controllers/intController";
+import { intController } from "../controllers/intController.js";
 
-const router = Router();
+const intRouter = Router();
 
-router.get('/int/:id', intController.getById);
-router.post('/int', intController.create);
-router.delete('/int/:id', intController.delete);
+intRouter.get('/:id', intController.getById);
+intRouter.post('', intController.create);
+intRouter.delete('/:id', intController.delete);
+
+export default intRouter

@@ -1,4 +1,4 @@
-import { intService } from "../services/intServices";
+import { intService } from "../services/intServices.js";
 
 export const intController = {
     async getById(req, res){
