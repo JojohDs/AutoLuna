@@ -36,7 +36,7 @@ export const veiculoController = {
       const veiculoAtualizado = await veiculoService.update(req.params.id, req.body)
       res.status(200).json(veiculoAtualizado)
     } catch (error) {
-      const status = error.message === 'Veiculo não encontrado!' ? 404 : 400;
+      const status = error.message === 'Veiculo não existe!' ? 404 : 400;
       res.status(status).json(
         {erro: error.message}
       )
@@ -44,16 +44,10 @@ export const veiculoController = {
   },
   async delete(req, res){
     try {
-      const veiculo = await veiculoService.getById(req.params.id)
-      if(!veiculo){
-        return res.status(404).json(
-          {erro: "post não encontrado!"}
-        )
-      }
       const veiculoDeletado = await veiculoService.delete(req.params.id)
       res.status(200).json(veiculoDeletado) 
     } catch (error) {
-      const status = error.message === "veiculo não econtrado!" ? 404 : 400;
+      const status = error.message === "veiculo não existe!" ? 404 : 400;
       res.status(status).json(
         {erro: error.message}
       )

@@ -3,11 +3,18 @@ import { intService } from "../services/intServices";
 export const intController = {
     async getById(req, res){
         try {
-            const getById = await intService.getById(req.params.id)
-            res.status(200).json(getById)
+            const interesse = await intService.getById(req.params.id)
+                if(!interesse){
+                    return res.status(404).json(
+                        {erro: "interesse não encontrado!"}
+                    )
+                }
+
+            res.status(200).json(interesse)
         } catch (error) {
-            res.status(500).json*
+            res.status(500).json(
             {erro: error.message}
+        )
         }
     },
     async create(req, res){

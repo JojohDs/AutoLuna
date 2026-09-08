@@ -17,7 +17,8 @@ export const veiculoService = {
         return await veiculoRepository.update(id, reqVeiculos);
     },
     async delete(id){
-        const veiculoDeletado = veiculoRepository.delete(id)
+        const veiculoDeletado = await veiculoRepository.delete(id)
         if(!veiculoDeletado) throw new Error('Veiculo não existe!')
+        return veiculoDeletado
     }
 }

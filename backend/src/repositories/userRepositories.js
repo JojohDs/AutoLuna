@@ -17,12 +17,12 @@ export const userRepository = {
     },
     async updateUser(id, user){
         const {nome, email, senha, tipo} = user
-        const sql = 'UPDATE usuarios SET nome = $1, email = $2, senha = $3, tipo = $4 returning *';
-        const res = await query(sql, [nome, email, senha, tipo], id)
+        const sql = 'UPDATE usuarios SET nome = $1, email = $2, senha = $3, tipo = $4 WHERE id = $5 returning *';
+        const res = await query(sql, [nome, email, senha, tipo, id])
         return res.rows[0]
     },
     async delete(id){
-        const sql = ('DELETE FROM usuarios WHERE id = $1');
+        const sql = ('DELETE FROM usuarios WHERE id = $1 returning *');
         const res = await query(sql, [id])
         return res.rows[0]
     }

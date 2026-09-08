@@ -12,8 +12,8 @@ export const intRepository = {
         return res.rows[0]
     },
     async delete(id){
-        const sql = 'DELETE FROM interesses WHERE id = $1'
+        const sql = 'DELETE FROM interesses WHERE id = $1 returning *'
         const res = await query(sql, [id])
-        res.rows[0]    
+        return res.rows[0]    
     }
 }
