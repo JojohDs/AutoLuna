@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import VehicleCard from "../components/VehicleCard";
-import { getVehicles } from "../services/vehicleService";
+import { useVehicles } from "../context/VehicleContext";
 
 function Home() {
-  const [search, setSearch] = useState("");
+  const { vehicles, loading } = useVehicles();
 
-  const vehicles = getVehicles();
+  const [search, setSearch] = useState("");
 
   const featuredVehicles = vehicles
     .filter((vehicle) => vehicle.status === "Disponível")
@@ -20,10 +20,10 @@ function Home() {
 
   return (
     <>
-
       <section className="hero">
 
         <div className="hero-content">
+
           <h1>
             Encontre o carro
             <span> ideal para você.</span>
@@ -56,6 +56,7 @@ function Home() {
       <section className="home-section">
 
         <div className="section-header">
+
           <div>
             <h2>
               Novidades da loja
@@ -65,13 +66,21 @@ function Home() {
           <Link to="/veiculos" className="see-all">
             Ver todos
           </Link>
+
         </div>
 
         <div className="vehicle-grid">
 
-          {featuredVehicles.map((vehicle) => (
-            <VehicleCard key={vehicle.id} vehicle={vehicle}/>
-          ))}
+          {loading ? (
+            <p>Carregando veículos...</p>
+          ) : (
+            featuredVehicles.map((vehicle) => (
+              <VehicleCard
+                key={vehicle.id}
+                vehicle={vehicle}
+              />
+            ))
+          )}
 
         </div>
 
@@ -80,18 +89,24 @@ function Home() {
       <section className="brands-section" id="servicos">
 
         <div className="section-header">
+
           <div>
             <h2>
               Principais marcas
             </h2>
           </div>
+
         </div>
 
         <div className="brands">
 
           {["Toyota", "Honda", "Fiat", "Chevrolet", "Jeep"].map(
             (brand) => (
-              <Link  key={brand} to={`/veiculos?marca=${brand}`} className="brand">
+              <Link
+                key={brand}
+                to={`/veiculos?marca=${brand}`}
+                className="brand"
+              >
                 {brand}
               </Link>
             )
@@ -104,6 +119,7 @@ function Home() {
       <section className="home-callout" id="ajuda">
 
         <div>
+
           <h2>
             Seu próximo carro pode estar aqui.
           </h2>
@@ -112,6 +128,7 @@ function Home() {
             Encontre veículos de diferentes marcas,
             categorias e faixas de preço.
           </p>
+
         </div>
 
         <Link to="/veiculos">
@@ -119,7 +136,6 @@ function Home() {
         </Link>
 
       </section>
-
     </>
   );
 }

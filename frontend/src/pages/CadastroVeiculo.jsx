@@ -1,5 +1,5 @@
 
-          import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useVehicles } from "../context/VehicleContext";
@@ -22,23 +22,18 @@ function CadastroVeiculo() {
     imagem: "",
   });
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-
-    setFormulario((current) => ({
-      ...current,
-      [name]: value,
-    }));
-  }
-
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    addVehicle(formulario);
+    try {
+      await addVehicle(formulario);
 
-    alert("Veículo cadastrado com sucesso!");
+      alert("Veículo cadastrado com sucesso!");
 
-    navigate("/veiculos");
+      navigate("/veiculos");
+    } catch (error) {
+      alert(error.message || "Erro ao cadastrar veículo.");
+    }
   }
 
   return (
