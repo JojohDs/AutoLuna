@@ -1,24 +1,38 @@
 import { veiculoRepository } from "../repositories/veiculoRepositories";
 
 export const veiculoService = {
-    async getAll(){
+
+    async getAll() {
         return await veiculoRepository.findAll();
     },
-    async getById(id){
+
+    async getById(id) {
         return await veiculoRepository.findById(id);
     },
-    async create(reqVeiculos){
-        return await veiculoRepository.create(reqVeiculos)
-    },
-    async update(id, reqVeiculos){
-        const veiculosExiste = await veiculoRepository.findById(id)
-        if (!veiculosExiste) throw new Error('Veiculo não encontrado!')
 
-        return await veiculoRepository.update(id, reqVeiculos);
+    async create(reqVeiculo) {
+        return await veiculoRepository.create(reqVeiculo);
     },
-    async delete(id){
-        const veiculoDeletado = await veiculoRepository.delete(id)
-        if(!veiculoDeletado) throw new Error('Veiculo não existe!')
-        return veiculoDeletado
+
+    async update(id, reqVeiculo) {
+
+        const veiculoExiste = await veiculoRepository.findById(id);
+
+        if (!veiculoExiste) {
+            throw new Error("Veículo não encontrado!");
+        }
+
+        return await veiculoRepository.update(id, reqVeiculo);
+    },
+
+    async delete(id) {
+
+        const veiculoExiste = await veiculoRepository.findById(id);
+
+        if (!veiculoExiste) {
+            throw new Error("Veículo não encontrado!");
+        }
+
+        return await veiculoRepository.delete(id);
     }
-}
+};

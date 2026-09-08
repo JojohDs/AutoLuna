@@ -1,23 +1,13 @@
-const API_URL = "http://localhost:3000/api/veiculos";
+const API_URL = "http://localhost:3000/veiculos";
 
 export async function getVehicles() {
   const response = await fetch(API_URL);
 
   if (!response.ok) {
-    throw new Error("Erro ao buscar veículos");
+    throw new Error("Erro ao buscar veículos.");
   }
 
-  return response.json();
-}
-
-export async function getVehicle(id) {
-  const response = await fetch(`${API_URL}/${id}`);
-
-  if (!response.ok) {
-    throw new Error("Erro ao buscar veículo");
-  }
-
-  return response.json();
+  return await response.json();
 }
 
 export async function createVehicle(vehicle) {
@@ -30,10 +20,11 @@ export async function createVehicle(vehicle) {
   });
 
   if (!response.ok) {
-    throw new Error("Erro ao cadastrar veículo");
+    const error = await response.json();
+    throw new Error(error.erro || "Erro ao cadastrar veículo.");
   }
 
-  return response.json();
+  return await response.json();
 }
 
 export async function updateVehicle(id, vehicle) {
@@ -46,10 +37,11 @@ export async function updateVehicle(id, vehicle) {
   });
 
   if (!response.ok) {
-    throw new Error("Erro ao atualizar veículo");
+    const error = await response.json();
+    throw new Error(error.erro || "Erro ao atualizar veículo.");
   }
 
-  return response.json();
+  return await response.json();
 }
 
 export async function deleteVehicle(id) {
@@ -58,15 +50,19 @@ export async function deleteVehicle(id) {
   });
 
   if (!response.ok) {
-    throw new Error("Erro ao excluir veículo");
+    const error = await response.json();
+    throw new Error(error.erro || "Erro ao excluir veículo.");
   }
 
-  return response.json();
-}  
+  return await response.json();
+}
 
 export async function markVehicleAsSold(id, vehicle) {
-  return updateVehicle(id, {
-    ...vehicle,
+  return await updateVehicle(id, {
+    quilometragem: vehicle.quilometragem,
+    preco: vehicle.preco,
+    cor: vehicle.cor,
+    combustivel: vehicle.combustivel,
     status: "Vendido",
   });
 }
